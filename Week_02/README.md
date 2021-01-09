@@ -37,20 +37,22 @@ Returns a Collection view of the values contained in this map.
 /**
  * HashMap的节点类型。既是HashMap底层数组的组成元素，又是每个单向链表的组成元素
  */
-static class Node<K,V> implements Map.Entry<K,V> {
-    //key的哈希值
-    final int hash;
-    final K key;
-    V value;
-    //指向下个节点的引用
-    Node<K,V> next;
-    //构造函数
-    Node(int hash, K key, V value, Node<K,V> next) {
-        this.hash = hash;
-        this.key = key;
-        this.value = value;
-        this.next = next;
-    }
+
+        static class Node<K,V> implements Map.Entry<K,V> {
+            //key的哈希值
+            final int hash;
+            final K key;
+            V value;
+            //指向下个节点的引用
+            Node<K,V> next;
+            //构造函数
+            Node(int hash, K key, V value, Node<K,V> next) {
+                this.hash = hash;
+                this.key = key;
+                this.value = value;
+                this.next = next;
+            }
+        }
 
 
 
@@ -60,39 +62,43 @@ If the parent node is stored at index I, the left child can be calculated by 2 *
 
 比如大顶heap
 新插入一个数，index为i 向上移动数字
-private heapify(int i) {
-    int newValue = heap[i];
-    // 如果新插入的值比父节点大，i值与父节点换，heap[i] = heap[parent(i)]
-    while (i > 0 && heap[i] > heap[parent(i)]) {
-        heap[i] = heap[parent(i)];
-        i = parent(i);
+    
+        
+    private heapify(int i) {
+        int newValue = heap[i];
+        // 如果新插入的值比父节点大，i值与父节点换，heap[i] = heap[parent(i)]
+        while (i > 0 && heap[i] > heap[parent(i)]) {
+            heap[i] = heap[parent(i)];
+            i = parent(i);
+        }
+        //最后再把newValue放到新的位置
+        heap[i] = newValue;
     }
-    //最后再把newValue放到新的位置
-    heap[i] = newValue;
-}
 
 
 删掉一个节点 delete element at x, 并且返回删掉的值
-public delete(int x) {
-    int maxValue = heap[x];
-    // 把最后一个节点放到heap[x]这里，然后把heapSize-1
-    heap[x] = heap[heapSize--];
+
     
-    heapifyDown(x);
-    return maxValue;
-}
+    public delete(int x) {
+        int maxValue = heap[x];
+        // 把最后一个节点放到heap[x]这里，然后把heapSize-1
+        heap[x] = heap[heapSize--];
+        heapifyDown(x);
+        return maxValue;
+    }
 
 
 将新的heap[x]放到合适的位置
 找左右儿子比本身大的，和其换位置
 
 
-// n: size of array
-void heapify(int[] arr, int i, int n) {
-    int largest = i;
-    int left = 2* i + 1;
-    int right = 2* i + 2;
+
     
+    // n: size of array
+    void heapify(int[] arr, int i, int n) {
+        int largest = i;
+        int left = 2* i + 1;
+        int right = 2* i + 2;
     if(left < n && arr[left] > arr[largest]){
         largest = left;
     }
