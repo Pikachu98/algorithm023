@@ -1,5 +1,7 @@
 package Week6;
 
+// https://leetcode-cn.com/problems/decode-ways/submissions/
+// 把一串是数字的字符串转换成字母，输出同一个字符串有多少种解法
 public class DecodeWays {
     public static int numDecodings(String s) {
         int n = s.length();
